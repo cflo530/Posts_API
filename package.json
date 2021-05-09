@@ -1,0 +1,14 @@
+{
+  "name": "post_api",
+  "version": "1.0.0",
+  "description": "Reskill American Post API Assignment",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Carlos Flores",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
