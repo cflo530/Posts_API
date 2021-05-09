@@ -45,19 +45,30 @@ app.post('/posts', (req, res) => {
 });
 
 // Put Route to update single Post
-// Allows update of "title" and "body" from posts.json
-// I went ahead and updated posts.json with id = 1
 app.put('/posts/:id', (req, res)  => {
-    let id = req.params.id - 1;
+    console.log(req.params.id);
+    let id = req.params.id;
+    let updatedPost = req.body.updatedPost;
+    
+    let updatePost = posts.find(post => String(post.id) === id);
 
-    let jsonData = fs.readFileSync("posts.json");
-    let data = JSON.parse(jsonData);
+    if(updatePost){
+        updatePost.title = updatedPost.title;
+        updatePost.body = updatedPost.body;
 
-    data[id]["title"] = req.body.title;
-    data[id]["body"] =  req.body.body;
-
-    fs.writeFileSync('posts.json', (JSON.stringify(data, null, 2)));
-    res.json(data);
+        let indexId = posts.indexOf(updatePost);
+        posts[indexId] = updatePost;
+        let StringedData = JSON.stringify(posts, null, 2);
+        fs.writeFile('posts.json', StringedData, (err) => {
+            if(err){
+                return res.status(500).json({message: err});
+            }
+        });
+        return res.status(200).json({posts:updatePost});
+    }
+    else{
+        return res.status(404).json({message: "Post could not be updated."});
+    }
 });
 
 app.listen(3000, () => {
