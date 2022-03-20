@@ -1,2 +1,2 @@
 # Posts_API
-RA Assignment
+GET and POST Request
